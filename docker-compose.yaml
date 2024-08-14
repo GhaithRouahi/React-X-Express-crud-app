@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    build: ./
+    build: ./backend
     restart: always
     ports:
       - "3000:3000"
@@ -23,6 +23,16 @@ services:
       - mysql-data:/var/lib/mysql
     ports:
       - "3306:3306"  # Expose MySQL port to host
+  
+  frontend:
+    build: ./frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_API_URL: localhost:3000/api/
+
 
 volumes:
   mysql-data:

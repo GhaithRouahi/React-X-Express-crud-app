@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 });
 
 // Get all tutorials
-app.get('/api/tutorials', (req, res) => {
+app.get('/tutorials', (req, res) => {
     const { title } = req.query;
     let query = 'SELECT * FROM tutorials';
     if (title) {
@@ -27,7 +27,7 @@ app.get('/api/tutorials', (req, res) => {
 });
 
 // Get tutorial by ID
-app.get('/api/tutorials/:id', (req, res) => {
+app.get('/tutorials/:id', (req, res) => {
     const { id } = req.params;
     connection.query('SELECT * FROM tutorials WHERE id = ?', [id], (error, results) => {
         if (error) {
@@ -41,7 +41,7 @@ app.get('/api/tutorials/:id', (req, res) => {
 });
 
 // Create a new tutorial
-app.post('/api/tutorials', (req, res) => {
+app.post('/tutorials', (req, res) => {
     const { title, description } = req.body;
     const query = 'INSERT INTO tutorials (title, description, published) VALUES (?, ?, ?)';
     connection.query(query, [title, description, false], (error, results) => {
@@ -54,7 +54,7 @@ app.post('/api/tutorials', (req, res) => {
 });
 
 // Update a tutorial by ID
-app.put('/api/tutorials/:id', (req, res) => {
+app.put('/tutorials/:id', (req, res) => {
     const { id } = req.params;
     const { title, description, published } = req.body;
     const query = 'UPDATE tutorials SET title = ?, description = ?, published = ? WHERE id = ?';
@@ -70,7 +70,7 @@ app.put('/api/tutorials/:id', (req, res) => {
 });
 
 // Delete a tutorial by ID
-app.delete('/api/tutorials/:id', (req, res) => {
+app.delete('/tutorials/:id', (req, res) => {
     const { id } = req.params;
     connection.query('DELETE FROM tutorials WHERE id = ?', [id], (error, results) => {
         if (error) {
@@ -84,7 +84,7 @@ app.delete('/api/tutorials/:id', (req, res) => {
 });
 
 // Delete all tutorials
-app.delete('/api/tutorials', (req, res) => {
+app.delete('/tutorials', (req, res) => {
     connection.query('DELETE FROM tutorials', (error, results) => {
         if (error) {
             return res.status(500).json({ error: error.message });
